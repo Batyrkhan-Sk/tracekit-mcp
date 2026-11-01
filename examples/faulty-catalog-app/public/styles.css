@@ -1,0 +1,41 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 24px;
+  color: #1d2433;
+}
+[hidden] {
+  display: none !important;
+}
+.catalog {
+  position: relative;
+  min-height: 320px;
+}
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef1f6;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  z-index: 1;
+}
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.grid li {
+  border: 1px solid #d4d9e3;
+  border-radius: 8px;
+  padding: 16px;
+}
+.price {
+  color: #4a5568;
+}

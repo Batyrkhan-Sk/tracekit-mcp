@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Catalog</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/config.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Catalog</h1>
+      <p class="sort-label">Sorted by <span data-testid="sort-order">name</span></p>
+    </header>
+    <main>
+      <section class="catalog" aria-label="Products">
+        <div class="loading-overlay" data-testid="catalog-loading" role="status">Loading catalog…</div>
+        <ul class="grid" data-testid="catalog-grid" hidden></ul>
+      </section>
+    </main>
+    <script src="/catalog.js"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+node_modules
+dist
+demo-output
+test-results
+package-lock.json
+examples/sample-investigation-report.json
