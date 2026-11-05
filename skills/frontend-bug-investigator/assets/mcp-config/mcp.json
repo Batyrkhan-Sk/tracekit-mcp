@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "tracekit": {
+      "command": "npx",
+      "args": ["-y", "tracekit-mcp"],
+      "env": {
+        "INVESTIGATOR_ALLOWED_LOCAL_ORIGINS": "http://localhost:5173",
+        "INVESTIGATOR_ALLOWED_HOSTS": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+# Add to ~/.codex/config.toml
+[mcp_servers.tracekit]
+command = "npx"
+args = ["-y", "tracekit-mcp"]
+
+[mcp_servers.tracekit.env]
+# Exact origins of local dev servers to investigate (comma-separated).
+INVESTIGATOR_ALLOWED_LOCAL_ORIGINS = "http://localhost:5173"
+# Optional: restrict the browser to these hosts (comma-separated, *.example.com allowed). Empty = any public host.
+INVESTIGATOR_ALLOWED_HOSTS = ""

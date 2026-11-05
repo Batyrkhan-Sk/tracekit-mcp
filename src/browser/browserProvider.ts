@@ -58,17 +58,28 @@ export class ChromiumProvider implements BrowserProvider {
 
   private async launch(): Promise<Browser> {
     this.options.logger.info('launching chromium', { headless: this.options.headless });
-    const browser = await chromium.launch({
-      headless: this.options.headless,
-      // Every context sets its own proxy. The launch-level placeholder makes a
-      // context without a proxy fail closed instead of connecting directly.
-      proxy: { server: 'http://per-context' },
-      args: [
-        '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
-        '--dns-prefetch-disable',
-        '--disable-quic',
-      ],
-    });
+    let browser: Browser;
+    try {
+      browser = await chromium.launch({
+        headless: this.options.headless,
+        // Every context sets its own proxy. The launch-level placeholder makes a
+        // context without a proxy fail closed instead of connecting directly.
+        proxy: { server: 'http://per-context' },
+        args: [
+          '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
+          '--dns-prefetch-disable',
+          '--disable-quic',
+        ],
+      });
+    } catch (error) {
+      if (error instanceof Error && /Executable doesn't exist/i.test(error.message)) {
+        throw new Error(
+          'Chromium is not installed. Run "npx -y tracekit-mcp install-browser" (or "npm run browsers:install" in a source checkout), then retry.',
+          { cause: error },
+        );
+      }
+      throw error;
+    }
     browser.on('disconnected', () => {
       if (!this.closingIntentionally.has(browser))
         this.options.logger.warn('browser disconnected unexpectedly');

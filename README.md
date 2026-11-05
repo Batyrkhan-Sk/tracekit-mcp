@@ -31,24 +31,26 @@ npm run demo               # full end-to-end demonstration (see below)
 
 ### Connect an MCP client
 
-The server speaks MCP over **stdio**.
-
-Claude Code:
+The server speaks MCP over **stdio**. It is published on npm as `tracekit-mcp`, so no checkout is needed:
 
 ```bash
-claude mcp add frontend-bug-investigator \
+npx -y tracekit-mcp install-browser   # one-time: downloads the matching Chromium
+
+claude mcp add tracekit \
   -e INVESTIGATOR_ALLOWED_LOCAL_ORIGINS=http://127.0.0.1:4173 \
-  -- node /absolute/path/to/repo/dist/index.js
+  -- npx -y tracekit-mcp
 ```
 
-Generic `mcpServers` configuration (Claude Desktop and similar clients):
+From a source checkout, use `node /absolute/path/to/repo/dist/index.js` instead of `npx -y tracekit-mcp`.
+
+Generic `mcpServers` configuration (Claude Desktop, Cursor and similar clients):
 
 ```json
 {
   "mcpServers": {
-    "frontend-bug-investigator": {
-      "command": "node",
-      "args": ["/absolute/path/to/repo/dist/index.js"],
+    "tracekit": {
+      "command": "npx",
+      "args": ["-y", "tracekit-mcp"],
       "env": {
         "INVESTIGATOR_ALLOWED_HOSTS": "staging.example.com,*.cdn.example.com",
         "INVESTIGATOR_ALLOWED_LOCAL_ORIGINS": "http://127.0.0.1:4173"
@@ -59,6 +61,18 @@ Generic `mcpServers` configuration (Claude Desktop and similar clients):
 ```
 
 For debugging you can use the MCP Inspector: `npx @modelcontextprotocol/inspector node dist/index.js`.
+
+---
+
+## Agent skill
+
+[`skills/frontend-bug-investigator/`](skills/frontend-bug-investigator/SKILL.md) is a ready-made agent skill (SKILL.md format) that teaches Claude Code, Cursor, Codex CLI and other agents when to use this server and how to run an investigation: choosing watch selectors, reproducing, reading the analysis honestly, and proving a fix with the generated regression test. It also ships configuration templates for each agent.
+
+```bash
+npm run skill:pack   # validates the skill and writes skill-dist/frontend-bug-investigator.zip
+```
+
+To use it directly, copy the folder into your agent's skills directory (for Claude Code: `.claude/skills/` in a project or `~/.claude/skills/`).
 
 ---
 

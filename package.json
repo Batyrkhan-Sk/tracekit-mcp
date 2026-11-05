@@ -1,7 +1,6 @@
 {
-  "name": "frontend-bug-investigator-mcp",
+  "name": "tracekit-mcp",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "dependencies": {
     "@modelcontextprotocol/server": "^2.4.0",
@@ -22,11 +21,30 @@
   },
   "description": "MCP server that investigates frontend bugs in a controlled browser, collects sanitized evidence, diagnoses probable causes and generates Playwright regression tests.",
   "license": "MIT",
+  "author": "Batyr",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Batyrkhan-Sk/tracekit-mcp.git"
+  },
+  "homepage": "https://github.com/Batyrkhan-Sk/tracekit-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/Batyrkhan-Sk/tracekit-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "playwright",
+    "frontend",
+    "debugging",
+    "bug-report",
+    "regression-test",
+    "claude"
+  ],
   "engines": {
     "node": ">=22.12"
   },
   "bin": {
-    "frontend-bug-investigator-mcp": "dist/index.js"
+    "tracekit-mcp": "dist/index.js"
   },
   "main": "dist/index.js",
   "files": [
@@ -51,6 +69,7 @@
     "demo": "npm run build && tsx scripts/run-demo.ts",
     "check": "npm run typecheck && npm run lint && npm test",
     "live:check": "npm run build && tsx scripts/live-check.ts",
-    "live:enterprise": "npm run build && tsx scripts/live-enterprise.ts"
+    "live:enterprise": "npm run build && tsx scripts/live-enterprise.ts",
+    "skill:pack": "tsx scripts/pack-skill.ts"
   }
 }

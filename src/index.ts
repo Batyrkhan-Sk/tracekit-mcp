@@ -1,10 +1,31 @@
 #!/usr/bin/env node
+import { spawn } from 'node:child_process';
+import { createRequire } from 'node:module';
+import path from 'node:path';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { loadConfig } from './config/config.js';
 import { createInvestigator, createMcpServer } from './server/createServer.js';
 import { createLogger } from './util/logger.js';
 
+/**
+ * `tracekit-mcp install-browser` downloads the Chromium build that matches the
+ * bundled Playwright version, so users never have to guess the right version.
+ */
+function installBrowser(): Promise<number> {
+  const playwrightEntry = createRequire(import.meta.url).resolve('playwright');
+  const cli = path.join(path.dirname(playwrightEntry), 'cli.js');
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, [cli, 'install', 'chromium'], { stdio: 'inherit' });
+    child.on('exit', (code) => resolve(code ?? 1));
+    child.on('error', () => resolve(1));
+  });
+}
+
 async function main(): Promise<void> {
+  if (process.argv[2] === 'install-browser') {
+    process.exit(await installBrowser());
+  }
+
   const config = loadConfig();
   const logger = createLogger(config.logLevel);
   const { manager } = createInvestigator(config, logger);
